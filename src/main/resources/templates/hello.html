@@ -1,35 +1,32 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="">
-<title>E-Bike Diagnose System</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-<link rel="stylesheet" th:href="@{/css/main.css}"
-	href="../../css/main.css" />
-
-</head>
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>hello of the spring application</title>
+        
+    </head>
     <body>
-        
-        <nav class="navbar navbar-inverse">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Ebike</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Battery</a></li>
-					<li><a href="#about">About</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-        
-        <h1 th:text="'hello,'+${name}+ '!'"></h1>
-        
-        <script type="text/javascript"
-		src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <h2>Spring's form textbox example</h2>
+
+	<form:form method="POST" commandName="getURL">
+		<form:errors path="*" cssClass="errorblock" element="div" />
+		<table>
+			<tr>
+				<td>provide the e bike IP address :</td>
+				<td><form:input path="ipAddress" />
+				</td>
+				<td><form:errors path="ipAddress" cssClass="error" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3"><input type="submit" />
+				</td>
+			</tr>
+		</table>
+	</form:form>
     </body>
 </html>

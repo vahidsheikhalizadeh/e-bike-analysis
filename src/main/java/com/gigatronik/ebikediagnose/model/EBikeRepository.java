@@ -13,8 +13,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * @author sheiv
  */
 @RepositoryRestResource(collectionResourceRel = "people", path = "people")
-public interface PersonRepository extends PagingAndSortingRepository<Person, Long> {
+public interface EBikeRepository extends PagingAndSortingRepository<EBike, Long> {
 
-	List<Person> findByLastName(@Param("name") String name);
+	List<EBike> findByDisplay(@Param("name") String name);
+        List<EBike> findAll ();
 
 }
