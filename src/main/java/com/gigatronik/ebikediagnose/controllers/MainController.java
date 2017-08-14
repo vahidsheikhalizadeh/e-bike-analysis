@@ -8,6 +8,8 @@ package com.gigatronik.ebikediagnose.controllers;
 import com.gigatronik.ebikediagnose.model.EBike;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,11 +51,11 @@ public class MainController {
 
         String name = request.getParameter("ipAddress");
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:8088/ecus/display", String.class);
-        EBike bike = new EBike(responseEntity.getBody().substring(0, 240));
-        bike.setBattery("batteryyyyyy");
-        bike.setMotor("motor");
-        System.out.println("==" + responseEntity.getBody());
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("https://gturnquist-quoters.cfapps.io/api/random", String.class);
+        EBike bike = new EBike(responseEntity.getBody(),"motor","battery");
+
+
+
         bikeRepository.save(bike);
         model.addAttribute("name", bike);
 
@@ -65,8 +67,18 @@ public class MainController {
 
         List<EBike> bikes = bikeRepository.findAll();
         model.addAttribute("Ebikes", bikes);
-        System.out.println("**" + bikes.get(0).getDisplay());
-        System.out.println("**" + bikes.get(0).getMotor());
+        System.out.println(bikes.get(0).getDisplay());
+        System.out.println(bikes.get(0).getMotor());
+
+
+        return "hello";
+    }
+
+    @RequestMapping(value = "/hello" , method = RequestMethod.POST)
+    public String addDevice(HttpServletRequest request,Model model){
+
+        String address = request.getParameter("address");
+        System.out.println("==="+address);
         return "hello";
     }
 
