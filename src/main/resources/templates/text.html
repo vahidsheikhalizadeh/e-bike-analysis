@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>text of the spring application</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -13,6 +13,20 @@ and open the template in the editor.
     <body>
         <div>text write content</div>
 
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Display</th>
+                <th>Battery</th>
+                <th>Mootr</th>
+            </tr>
+            <tr th:each="ebike : ${Ebikes}">
+                <td th:text="${ebike.id}"></td>
+                <td th:text="${ebike.display}"></td>
+                <td th:text="${ebike.battery}"></td>\
+                <td th:text="${ebike.motor}"></td>
+            </tr>
+        </table>
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

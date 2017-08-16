@@ -38,40 +38,40 @@ public class MainController {
 
     }
 
-    /**
-     * URL will be passed as a parameter from the user interface and dynamically
-     * can call the rest api in this method
-     *
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/text", method = RequestMethod.GET)
-    public String storeData(HttpServletRequest request, Model model) {
+
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String storeData(HttpServletRequest request) {
 
         String name = request.getParameter("ipAddress");
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("https://gturnquist-quoters.cfapps.io/api/random", String.class);
         EBike bike = new EBike(responseEntity.getBody(),"motor","battery");
 
-
+        System.out.println("hello get has been executed ..");
 
         bikeRepository.save(bike);
-        model.addAttribute("name", bike);
+
 
         return "hello";
     }
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    @RequestMapping(value = "/text", method = RequestMethod.GET)
     public String showValues(HttpServletRequest request, Model model) {
-
+        int i = 0 ;
         List<EBike> bikes = bikeRepository.findAll();
+        for (EBike eBike:bikes) {
+            System.out.println("****"+bikes.get(i).getId());
+            System.out.println(bikes.get(i).getDisplay());
+            System.out.println(bikes.get(i).getBattery());
+            System.out.println(bikes.get(i).getMotor());
+            i++;
+        }
+
         model.addAttribute("Ebikes", bikes);
-        System.out.println(bikes.get(0).getDisplay());
-        System.out.println(bikes.get(0).getMotor());
 
 
-        return "hello";
+
+        return "text";
     }
 
     @RequestMapping(value = "/hello" , method = RequestMethod.POST)
