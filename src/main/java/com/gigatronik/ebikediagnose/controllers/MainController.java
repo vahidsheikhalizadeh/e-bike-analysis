@@ -8,8 +8,6 @@ package com.gigatronik.ebikediagnose.controllers;
 import com.gigatronik.ebikediagnose.model.EBike;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,16 +40,7 @@ public class MainController {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String storeData(HttpServletRequest request) {
 
-        String name = request.getParameter("ipAddress");
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("https://gturnquist-quoters.cfapps.io/api/random", String.class);
-        EBike bike = new EBike(responseEntity.getBody(),"motor","battery");
-
-        System.out.println("hello get has been executed ..");
-
-        bikeRepository.save(bike);
-
-
+   
         return "hello";
     }
 
@@ -59,6 +48,7 @@ public class MainController {
     public String showValues(HttpServletRequest request, Model model) {
         int i = 0 ;
         List<EBike> bikes = bikeRepository.findAll();
+        
         for (EBike eBike:bikes) {
             System.out.println("****"+bikes.get(i).getId());
             System.out.println(bikes.get(i).getDisplay());
@@ -78,6 +68,14 @@ public class MainController {
     public String addDevice(HttpServletRequest request,Model model){
 
         String address = request.getParameter("address");
+        RestTemplate restTemplate = new RestTemplate();
+        String ipAdress = "http://"+address+":8088/ecus/display";
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(ipAdress, String.class);
+        EBike bike = new EBike(responseEntity.getBody().substring(0, 250),"motor","battery");
+
+        System.out.println("hello get has been executed ..");
+
+        bikeRepository.save(bike);
         System.out.println("==="+address);
         return "hello";
     }
